@@ -1,13 +1,24 @@
 const Expenses = require('../model/expenses')
 
-const addValues =  (req, res) => {
+
+
+const addValues =  async(req, res) => {
 
     let expenses = new Expenses(req.body)
+    expenses.create();
 
-    expenses.create(req.body);
-
-    res.send('adicionado')
+    await res.send('adicionado')
     
 }
 
-module.exports = {addValues};
+const findAll = async (req, res) =>{
+    
+    let expenses = new Expenses(req.body)
+
+    expenses.searchAll()
+
+    await res.json()
+    
+}
+
+module.exports = {addValues, findAll};

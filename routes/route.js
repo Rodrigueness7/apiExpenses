@@ -2,8 +2,8 @@ const express = require('express')
 const route = express.Router()
 const controller = require('../controller/controllerExpenses')
 
-
-route.post('/', controller.addValues)
+route.get('/', controller.findAll)
+route.post('/add', controller.addValues)
 
 
 module.exports = route;

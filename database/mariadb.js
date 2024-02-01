@@ -10,7 +10,7 @@ const pool = mariadb.createPool({
     
 })
 
-const insert = (table, data) => {
+const cnInsert = (table, data) => {
     let keys = '?'.repeat(Object.keys(data).length)
 
     pool.getConnection().then(
@@ -20,14 +20,29 @@ const insert = (table, data) => {
     )
 }
 
-const select = (table) => {
+const cnSelect = (table, res) => {
 
     pool.getConnection().then(
         conn => {
-            conn.query(`SELECT * FROM ${table}`)
+            conn.query(`SELECT * FROM ${table}`).then(
+                (rows) => {
+                    res.json(rows)
+                }
+            )
         }
     )
 } 
 
+const cnUpdate = (table, data, params) => {
 
-module.exports = { insert, select }
+    let keys = Object.keys(data).join(' = ?, ').concat(' = ? ')
+
+    pool.getConnection().then(
+        conn => {
+            conn.query(`UPDATE ${table} SET ${keys} WHERE id =${params} `, Object.values(data))
+        }
+    )
+}
+
+
+module.exports = { cnInsert, cnSelect, cnUpdate }

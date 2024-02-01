@@ -1,24 +1,24 @@
 const Expenses = require('../model/expenses')
+const db = require('../database/mariadb')
 
 
 
 const addValues =  async(req, res) => {
 
     let expenses = new Expenses(req.body)
-    expenses.create();
+    expenses.mdCreate();
 
-    await res.send('adicionado')
+    await res.json({data: 'Adicionado'})
     
 }
 
 const findAll = async (req, res) =>{
     
-    let expenses = new Expenses(req.body)
+    db.cnSelect('expenses', await res)
 
-    expenses.searchAll()
-
-    await res.json()
     
 }
+
+
 
 module.exports = {addValues, findAll};

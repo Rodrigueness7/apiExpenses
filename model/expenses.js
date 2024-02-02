@@ -13,12 +13,10 @@ class Expenses {
         this.description = this.setDescription(data.description);
         this.value = this.setValue(data.value);
         this.dt_exp = this.setDt_exp(data.dt_exp);
-        this.dt_paid = this.setDt_paid(data.dt_paid)
+        this.dt_paid = this.setDt_paid(data.dt_paid);
 
         
-        this.mdCreate(data)
-        this.mdUpdate(data)
-       
+        this.create()
     }
 
     getId() {
@@ -29,8 +27,10 @@ class Expenses {
     setId(id) {
         
         if (id === undefined) {
-            throw new Error('id invalid')
-        }
+             return this.id = 0  
+        } 
+            
+          return this.id = id
 
     }
 
@@ -44,6 +44,8 @@ class Expenses {
         if (description === undefined) {
             throw new Error('Description invalid')
         }
+
+        return this.description = description;
     }
 
     getValue() {
@@ -56,6 +58,8 @@ class Expenses {
         if (value === undefined) {
             throw new Error('value invalid')
         }
+
+        return this.value = value
     }
 
     getDt_exp() {
@@ -68,9 +72,11 @@ class Expenses {
         if (dt_exp === undefined) {
             throw new Error('dt_exp invalid')
         }
+
+        return this.dt_exp = dt_exp
     }
 
-    getDt_paid(){
+    getDt_paid() {
         
         return this.dt_paid
     }
@@ -78,23 +84,22 @@ class Expenses {
     setDt_paid(dt_paid) {
         
         if (dt_paid === undefined){
-            throw new Error('dt_paid invalid')
+            
+            return this.dt_paid = null
         }
+
+          return this.dt_paid = dt_paid  
 
     }
 
-    mdCreate = (data) => {
+    create = (data) => {
         
         try {
-            if (this.id || this.description || this.value || this.dt_exp || this.dt_paid) {
-                this.id
-                this.description
-                this.value
-                this.dt_exp
-                this.dt_paid
-            }
 
-            db.cnInsert('expenses', data)
+            let values = new Expenses(data)
+            
+            db.insert('expenses', values)
+            
 
         } catch (error) {
             
@@ -102,25 +107,6 @@ class Expenses {
         }
     }
 
-    mdUpdate(data, params){
-
-        try {
-            if (this.id || this.description || this.value || this.dt_exp || this.dt_paid) {
-                this.id
-                this.description
-                this.value
-                this.dt_exp
-                this.dt_paid
-            }
-
-            db.cnUpdate('expenses',data, params)
-
-
-        } catch (error) {
-            
-            console.log(error.message)
-        }
-    }
 
 
 }

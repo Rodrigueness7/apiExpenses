@@ -6,7 +6,7 @@ const db = require('../database/mariadb')
 const addValues =  async(req, res) => {
 
     let expenses = new Expenses(req.body)
-    expenses.mdCreate();
+    expenses.create(expenses);
 
     await res.json({data: 'Adicionado'})
     
@@ -14,10 +14,10 @@ const addValues =  async(req, res) => {
 
 const findAll = async (req, res) =>{
     
-    db.cnSelect('expenses', await res)
+    db.select('expenses', await res)
 
     
-}
+}  
 
 
 

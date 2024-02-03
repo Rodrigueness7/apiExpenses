@@ -1,4 +1,5 @@
 const db = require('../database/mariadb')
+
 class Expenses {
 
     id;
@@ -7,22 +8,20 @@ class Expenses {
     dt_exp;
     dt_paid;
 
+    #table = 'expenses';
 
     constructor(data) {
-        this.id = this.setId(data.id);
-        this.description = this.setDescription(data.description);
-        this.value = this.setValue(data.value);
-        this.dt_exp = this.setDt_exp(data.dt_exp);
-        this.dt_paid = this.setDt_paid(data.dt_paid);
-
-        
-        this.create()
-    }
+        this.setId(data.id);
+        this.setDescription(data.description);
+        this.setValue(data.value);
+        this.setDt_exp(data.dt_exp);
+        this.setDt_paid(data.dt_paid);
+    };
 
     getId() {
         
         return this.id
-    }
+    };
 
     setId(id) {
         
@@ -31,13 +30,12 @@ class Expenses {
         } 
             
           return this.id = id
-
-    }
+    };
 
     getDescription() {
         
         return this.description
-    }
+    };
 
     setDescription(description) {
         
@@ -46,12 +44,12 @@ class Expenses {
         }
 
         return this.description = description;
-    }
+    };
 
     getValue() {
         
         return this.value
-    }
+    };
 
     setValue(value) {
         
@@ -60,12 +58,12 @@ class Expenses {
         }
 
         return this.value = value
-    }
+    };
 
     getDt_exp() {
         
         return this.dt_exp
-    }
+    };
 
     setDt_exp(dt_exp) {
         
@@ -74,42 +72,30 @@ class Expenses {
         }
 
         return this.dt_exp = dt_exp
-    }
+    };
 
     getDt_paid() {
         
         return this.dt_paid
-    }
+    };
 
     setDt_paid(dt_paid) {
         
         if (dt_paid === undefined){
-            
-            return this.dt_paid = null
-        }
 
+          return this.dt_paid = null
+        }
           return this.dt_paid = dt_paid  
+    };
 
+    
+    async created(expense) {
+        await db.insert(this.#table, expense);
     }
 
-    create = (data) => {
-        
-        try {
-
-            let values = new Expenses(data)
-            
-            db.insert('expenses', values)
-            
-
-        } catch (error) {
-            
-            console.log(error.message)
-        }
+    async update(expense, req) {
+        await db.update(this.#table,expense, req.id);
     }
-
-
-
 }
-
 
 module.exports = Expenses;

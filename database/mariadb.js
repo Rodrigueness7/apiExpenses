@@ -10,39 +10,48 @@ const pool = mariadb.createPool({
     
 })
 
-const insert = (table, data) => {
+const insert = async (table, data) => {
     let keys = '?'.repeat(Object.keys(data).length)
 
     pool.getConnection().then(
-        conn => {
-            conn.query(`INSERT INTO ${table} VALUE (${Object.values(keys)})`, Object.values(data))
+        async conn => {
+            await conn.query(`INSERT INTO ${table} VALUE (${Object.values(keys)})`, Object.values(data))
         }
     )
 }
 
-const select = (table, res) => {
+const select = async (table, res) => {
 
     pool.getConnection().then(
-        conn => {
-            conn.query(`SELECT * FROM ${table}`).then(
-                (rows) => {
-                    res.json(rows)
+       async conn => {
+           await conn.query(`SELECT * FROM ${table}`).then(
+               async (rows) => {
+                   await res.json(rows)
                 }
             )
         }
     )
 } 
 
-const update = (table, data, params) => {
+const update = async (table, data, params) => {
 
     let keys = Object.keys(data).join(' = ?, ').concat(' = ? ')
 
     pool.getConnection().then(
-        conn => {
-            conn.query(`UPDATE ${table} SET ${keys} WHERE id =${params} `, Object.values(data))
+        async conn => {
+            await conn.query(`UPDATE ${table} SET ${keys} WHERE id = ${params} `, Object.values(data))
+        }
+    )
+}
+
+const remove = async(table, params) => {
+
+    pool.getConnection().then(
+       async  conn => {
+           await conn.query(`DELETE FROM ${table} WHERE id = ${params}`)
         }
     )
 }
 
 
-module.exports = { insert, select, update }
+module.exports = { insert, select, update, remove }

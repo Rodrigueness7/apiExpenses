@@ -11,11 +11,14 @@ class Expenses {
     #table = 'expenses';
 
     constructor(data) {
-        this.setId(data.id);
-        this.setDescription(data.description);
-        this.setValue(data.value);
-        this.setDt_exp(data.dt_exp);
-        this.setDt_paid(data.dt_paid);
+        if(data){
+            this.setId(data.id);
+            this.setDescription(data.description);
+            this.setValue(data.value);
+            this.setDt_exp(data.dt_exp);
+            this.setDt_paid(data.dt_paid);
+        }
+    
     };
 
     getId() {
@@ -95,6 +98,14 @@ class Expenses {
 
     async update(expense, req) {
         await db.update(this.#table,expense, req.id);
+    }
+
+    async searchAll(res) {
+      await db.select(this.#table, res)
+    }
+
+    async delete(params) {
+        await db.remove(this.#table, params)
     }
 }
 

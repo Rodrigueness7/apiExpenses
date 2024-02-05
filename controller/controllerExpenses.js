@@ -11,7 +11,10 @@ const add = async(req, res) => {
 }
 
 const findAll = async (req, res) => {
-    db.select('expenses', await res)
+    let expenses = new Expenses
+   await expenses.searchAll(res)
+ 
+
 }  
 
 const change = async (req, res) => {
@@ -22,9 +25,10 @@ const change = async (req, res) => {
 }
 
 const remove = async (req, res) => {
-    let id = req.params.id
-    await db.remove('expenses', id )
+    let expenses = new Expenses
+    await expenses.delete(req.params.id)
     res.json({data: 'Removido'})
+   
 }
 
 

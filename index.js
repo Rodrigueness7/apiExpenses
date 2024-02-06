@@ -7,17 +7,17 @@ const route = require('./routes/route')
 app.use('/', express.json(), route)
 
 app.listen(PORT, (error) => {
- 
+
     try {
 
-        if(error){
+        if (error) {
             throw new Error('Server is not running')
         }
 
         console.log(`Server running on port: ${PORT} `)
     } catch (error) {
-        
+
         console.log(error.message)
     }
-     
+
 })

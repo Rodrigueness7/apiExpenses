@@ -6,52 +6,60 @@ const pool = mariadb.createPool({
     database: process.env.database,
     user: process.env.user,
     password: process.env.password,
-    connectionLimit: 5
-    
+    connectionLimit: 1000,
+
 })
 
 const insert = async (table, data) => {
     let keys = '?'.repeat(Object.keys(data).length)
 
-    pool.getConnection().then(
+    await pool.getConnection().then(
         async conn => {
             await conn.query(`INSERT INTO ${table} VALUE (${Object.values(keys)})`, Object.values(data))
         }
     )
 }
 
-const select = async (table, res) => {
+const select = async (table, result) => {
 
-    pool.getConnection().then(
-       async conn => {
-           await conn.query(`SELECT * FROM ${table}`).then(
-               async (rows) => {
-                   await res.json(rows)
-                }
+    await pool.getConnection().then(
+        async conn => {
+            await conn.query(`SELECT * FROM ${table}`).then(
+                result
             )
         }
     )
-} 
+}
 
 const update = async (table, data, params) => {
 
     let keys = Object.keys(data).join(' = ?, ').concat(' = ? ')
 
-    pool.getConnection().then(
+    await pool.getConnection().then(
         async conn => {
             await conn.query(`UPDATE ${table} SET ${keys} WHERE id = ${params} `, Object.values(data))
         }
     )
 }
 
-const remove = async(table, params) => {
+const remove = async (table, params) => {
 
-    pool.getConnection().then(
-       async  conn => {
-           await conn.query(`DELETE FROM ${table} WHERE id = ${params}`)
+    await pool.getConnection().then(
+        async conn => {
+            await conn.query(`DELETE FROM ${table} WHERE id = ${params}`)
         }
     )
 }
 
+const selectById = async (table, params, result) => {
 
-module.exports = { insert, select, update, remove }
+    await pool.getConnection().then(
+        async conn => {
+            await conn.query(`SELECT * FROM ${table} WHERE id = ${params}`).then(
+                result
+            )
+        }
+    )
+}
+
+module.exports = { insert, select, update, remove, selectById }

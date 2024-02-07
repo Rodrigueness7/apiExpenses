@@ -6,7 +6,7 @@ const pool = mariadb.createPool({
     database: process.env.database,
     user: process.env.user,
     password: process.env.password,
-    connectionLimit: 1000,
+    connectionLimit: 5,
 
 })
 
@@ -15,7 +15,9 @@ const insert = async (table, data) => {
 
     await pool.getConnection().then(
         async conn => {
-            await conn.query(`INSERT INTO ${table} VALUE (${Object.values(keys)})`, Object.values(data))
+            await conn.query(`INSERT INTO ${table} VALUE (${Object.values(keys)})`, Object.values(data)).then(
+                conn.end()
+            )
         }
     )
 }
@@ -25,7 +27,9 @@ const select = async (table, result) => {
     await pool.getConnection().then(
         async conn => {
             await conn.query(`SELECT * FROM ${table}`).then(
-                result
+                    result    
+            ).then(
+                conn.end()
             )
         }
     )
@@ -37,7 +41,9 @@ const update = async (table, data, params) => {
 
     await pool.getConnection().then(
         async conn => {
-            await conn.query(`UPDATE ${table} SET ${keys} WHERE id = ${params} `, Object.values(data))
+            await conn.query(`UPDATE ${table} SET ${keys} WHERE id = ${params} `, Object.values(data)).then(
+                conn.end()
+            )
         }
     )
 }
@@ -46,7 +52,9 @@ const remove = async (table, params) => {
 
     await pool.getConnection().then(
         async conn => {
-            await conn.query(`DELETE FROM ${table} WHERE id = ${params}`)
+            await conn.query(`DELETE FROM ${table} WHERE id = ${params}`).then(
+                conn.end()
+            )
         }
     )
 }
@@ -56,7 +64,9 @@ const selectById = async (table, params, result) => {
     await pool.getConnection().then(
         async conn => {
             await conn.query(`SELECT * FROM ${table} WHERE id = ${params}`).then(
-                result
+                    result
+            ).then(
+                conn.end()
             )
         }
     )

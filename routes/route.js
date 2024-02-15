@@ -4,7 +4,7 @@ const controller = require('../controller/controllerExpenses')
 
 route.get('/', controller.findAll)
 route.post('/add', controller.add)
-route.get('/:id', controller.findById)
+route.get('/find/:id', controller.findById)
 route.put('/update/:id', controller.change)
 route.delete('/remove/:id', controller.remove)
 

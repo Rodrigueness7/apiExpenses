@@ -72,4 +72,16 @@ const selectById = async (table, params, result) => {
     )
 }
 
-module.exports = { insert, select, update, remove, selectById }
+const sum = async (table, column, result) => {
+    
+    await pool.getConnection().then(
+        async conn => {
+            await conn.query(`SELECT SUM(${column}) FROM ${table}`).then(
+                result
+            ).then(
+                conn.end()
+            )
+        }
+    )
+}
+module.exports = { insert, select, update, remove, selectById, sum }

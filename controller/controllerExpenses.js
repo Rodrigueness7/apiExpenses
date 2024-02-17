@@ -13,8 +13,7 @@ const add = async (req, res) => {
 const findAll = async (req, res) => {
     let expenses = new Expenses
     await expenses.searchAll(res)
-
-
+   
 }
 
 const change = async (req, res) => {
@@ -37,5 +36,10 @@ const findById = async (req, res) => {
 
 }
 
+const sum = async (req, res) => {
+    let expenses = new Expenses
+    await expenses.sum(res)
+}
 
-module.exports = { add, findAll, change, remove, findById };
+
+module.exports = { add, findAll, change, remove, findById, sum };

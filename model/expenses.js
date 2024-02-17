@@ -9,6 +9,7 @@ class Expenses {
     dt_paid;
 
     #table = 'expenses';
+    #column = 'value';
 
     constructor(data) {
         if (data) {
@@ -115,6 +116,12 @@ class Expenses {
             await res.json(rows)
         })
     };
+
+    async sum(res) {
+        await db.sum(this.#table, this.#column, async (rows) => {
+            await res.json(rows)
+        })
+    }
 };
 
 

@@ -5,7 +5,8 @@ const PORT = process.env.PORT;
 const route = require('./routes/route')
 const cors = require('cors')
 
-app.use('/',cors(), express.json(),express.urlencoded({extended: true}), route) 
+
+app.use('/', cors(), express.json(),express.urlencoded({extended: true}), route) 
 
 app.listen(PORT, (error) => {
 

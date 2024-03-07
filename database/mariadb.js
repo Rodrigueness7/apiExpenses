@@ -84,4 +84,16 @@ const sum = async (table, column, result) => {
         }
     )
 }
-module.exports = { insert, select, update, remove, selectById, sum }
+
+const updateDt_paid = async (table, data, params) => {
+    const keys = Object.keys(data).join(' = ? ').concat( ' = ? ')
+
+    await pool.getConnection().then(
+        async conn => {
+            await conn.query(`UPDATE ${table} SET ${keys} WHERE id = ${params}`, Object.values(data)).then(
+                conn.end()
+            )
+        }
+    )
+}
+module.exports = { insert, select, update, remove, selectById, sum, updateDt_paid }

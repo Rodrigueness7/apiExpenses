@@ -41,5 +41,10 @@ const sum = async (req, res) => {
     await expenses.sum(res)
 }
 
+const updateDtPaid = async (req, res) => {
+    let expenses = new Expenses
+    await expenses.updateDt_paid(expenses, req.params.id)
+    res.send({data: 'Pago'})
+} 
 
-module.exports = { add, findAll, change, remove, findById, sum };
+module.exports = { add, findAll, change, remove, findById, sum, updateDtPaid };

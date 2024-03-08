@@ -86,8 +86,8 @@ const sum = async (table, column, result) => {
 }
 
 const updateDt_paid = async (table, data, params) => {
-    const keys = Object.keys(data).join(' = ? ').concat( ' = ? ')
-
+    const keys = Object.keys(data).join(' = ?, ').concat( ' = ? ')
+  
     await pool.getConnection().then(
         async conn => {
             await conn.query(`UPDATE ${table} SET ${keys} WHERE id = ${params}`, Object.values(data)).then(

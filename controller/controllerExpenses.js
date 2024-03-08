@@ -42,7 +42,7 @@ const sum = async (req, res) => {
 }
 
 const updateDtPaid = async (req, res) => {
-    let expenses = new Expenses
+    let expenses = new Expenses(req.body)
     await expenses.updateDt_paid(expenses, req.params.id)
     res.send({data: 'Pago'})
 } 

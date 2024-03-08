@@ -8,8 +8,8 @@ class Expenses {
     dt_exp;
     dt_paid;
 
-    table = 'expenses';
-    column = 'value';
+    #table = 'expenses';
+    #column = 'value';
 
     constructor(data) {
         
@@ -18,8 +18,10 @@ class Expenses {
             this.setDescription(data.description);
             this.setValue(data.value);
             this.setDt_exp(data.dt_exp); 
-            this.setDt_paid(data.dt_paid);   
+            this.setDt_paid(data.dt_paid)
+            
         } 
+      
     };
 
     getId() {
@@ -93,41 +95,44 @@ class Expenses {
     };
 
 
-     async created(expense) {
-        await db.insert(this.table, expense);
+    async created(expense) {
+        await db.insert(this.#table, expense);
     };
 
     async update(expense, req) {
-        await db.update(this.table, expense, req.id);
+        await db.update(this.#table, expense, req.id);
     };
 
     async searchAll(res) {
 
-        await db.select(this.table, async (rows) => {
+        await db.select(this.#table, async (rows) => {
             await res.json(rows);
         })
     };
 
     async delete(params) {
-        await db.remove(this.table, params);
+        await db.remove(this.#table, params);
     };
 
-   async searchById(params, res) {
-        await db.selectById(this.table, params, async (rows) => {
+    async searchById(params, res) {
+        await db.selectById(this.#table, params, async (rows) => {
             await res.json(rows);
         })
     };
 
     async sum(res) {
-        await db.sum(this.table, this.column, async (rows) => {
+        await db.sum(this.#table, this.#column, async (rows) => {
             await res.json(rows);
         })
     }
 
     async updateDt_paid(expense, params) {
-        await db.updateDt_paid(this.table, expense, params);
+        await db.updateDt_paid(this.#table, expense, params);
     }
 };
 
 
 module.exports = Expenses;
+
+
+           

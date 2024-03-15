@@ -96,4 +96,5 @@ const updateDt_paid = async (table, data, params) => {
         }
     )
 }
+
 module.exports = { insert, select, update, remove, selectById, sum, updateDt_paid }

@@ -7,6 +7,7 @@ class Expenses {
     value;
     dt_exp;
     dt_paid;
+    dt_launch;
 
     #table = 'expenses';
     #column = 'value';
@@ -18,7 +19,8 @@ class Expenses {
             this.setDescription(data.description);
             this.setValue(data.value);
             this.setDt_exp(data.dt_exp); 
-            this.setDt_paid(data.dt_paid)
+            this.setDt_paid(data.dt_paid);
+            this.setDt_launch(data.dt_launch);
             
         } 
       
@@ -93,6 +95,20 @@ class Expenses {
         }
         return this.dt_paid = dt_paid
     };
+
+    getDt_launch() {
+        return this.dt_launch
+
+    }
+
+    setDt_launch(dt_launch) {
+
+        if(dt_launch === undefined) {
+            throw new Error('dt_lauch invalid')
+        }
+
+        return this.dt_launch = dt_launch;
+    }
 
 
     async created(expense) {

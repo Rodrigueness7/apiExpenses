@@ -86,7 +86,7 @@ const sum = async (table, column, result) => {
 }
 
 const updateDt_paid = async (table, data, params) => {
-    const keys = Object.keys(data).join(' = ?, ').concat( ' = ? ')
+    const keys = Object.keys(data).join(' = ?, ').concat(' = ? ')
   
     await pool.getConnection().then(
         async conn => {
@@ -97,4 +97,23 @@ const updateDt_paid = async (table, data, params) => {
     )
 }
 
-module.exports = { insert, select, update, remove, selectById, sum, updateDt_paid }
+
+const valuesEntryDate = async ( table, condition, data, result ) => {
+
+    let keys = "? AND ".repeat(Object.keys(data).length).slice(0,8)
+    
+   
+    await pool.getConnection().then(
+        async conn => {
+            await conn.query(`SELECT SUM(value) FROM ${table} WHERE ${condition} BETWEEN ${keys} `, Object.values(data)).then(
+                result
+            ).then(
+                conn.end()
+            )
+        }
+    )
+}
+
+
+
+module.exports = { insert, select, update, remove, selectById, sum, updateDt_paid, valuesEntryDate }

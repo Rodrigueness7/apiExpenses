@@ -145,6 +145,12 @@ class Expenses {
     async updateDt_paid(expense, params) {
         await db.updateDt_paid(this.#table, expense, params);
     }
+
+    static async valuesEntryDate (expenses, res) {
+       db.valuesEntryDate('expenses', 'dt_exp', expenses, async (rows) => {
+        await res.json(rows)
+       })
+    } 
 };
 
 

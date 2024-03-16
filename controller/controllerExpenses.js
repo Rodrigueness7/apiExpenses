@@ -47,4 +47,9 @@ const updateDtPaid = async (req, res) => {
     res.send({data: 'Pago'})
 } 
 
-module.exports = { add, findAll, change, remove, findById, sum, updateDtPaid };
+const valuesByDate = async (req, res) => {
+    Expenses.valuesEntryDate(req.body, res)
+    
+}
+
+module.exports = { add, findAll, change, remove, findById, sum, updateDtPaid, valuesByDate };

@@ -48,8 +48,12 @@ const updateDtPaid = async (req, res) => {
 } 
 
 const valuesByDate = async (req, res) => {
-    Expenses.valuesEntryDate(req.body, res)
+   await Expenses.valuesEntryDate(req.body, res)
     
 }
 
-module.exports = { add, findAll, change, remove, findById, sum, updateDtPaid, valuesByDate };
+const findByDate = async (req, res) => {
+    await Expenses.selectEntryDate(req.body, res) 
+}
+
+module.exports = { add, findAll, change, remove, findById, sum, updateDtPaid, valuesByDate, findByDate };

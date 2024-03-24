@@ -152,10 +152,11 @@ class Expenses {
        })
     } 
 
-    static async selectEntryDate (data, res) {
-        db.selectEntryDate('expenses', 'dt_exp',data, async (rows) => {
+    static async selectEntryDate (params, res) {
+        db.selectEntryDate('expenses', 'dt_exp',params, async (rows) => {
             await res.json(rows)
         } )
+        
     }
 };
 

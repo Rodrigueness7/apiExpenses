@@ -53,7 +53,12 @@ const valuesByDate = async (req, res) => {
 }
 
 const findByDate = async (req, res) => {
-    await Expenses.selectEntryDate(req.body, res) 
+    let params = {
+        dtInit: req.params.dtInit,
+        dtFinish: req.params.dtFinish
+    }
+    await Expenses.selectEntryDate(params, res) 
+
 }
 
 module.exports = { add, findAll, change, remove, findById, sum, updateDtPaid, valuesByDate, findByDate };

@@ -103,7 +103,7 @@ const selectEntryDate = async (table, condition, data, result) => {
 
     await pool.getConnection().then(
         async conn => {
-            await conn.query(`SELECT * FROM ${table} WHERE ${condition} BETWEEN ${keys}`, Object.values(data)).then(
+            await conn.query(`SELECT * FROM ${table} WHERE ${condition} BETWEEN ${keys} ORDER BY dt_exp`, Object.values(data)).then(
                 result
             ).then(
                 conn.end()
